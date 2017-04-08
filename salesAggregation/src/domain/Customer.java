@@ -1,13 +1,23 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * A domain class for representing a customer.
  * 
  * @author adath325
  */
-public class Customer {
+public class Customer implements Serializable {
 	private Character gender;
 	private String dateOfBirth;
+
+	public Customer() {
+	}
+
+	public Customer(Character gender, String dateOfBirth) {
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+	}
 
 	public Character getGender() {
 		return gender;
@@ -22,11 +32,6 @@ public class Customer {
 	}
 
 	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Customer(Character gender, String dateOfBirth) {
-		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 	}
 

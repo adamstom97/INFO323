@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -8,11 +9,14 @@ import java.util.Collection;
  * 
  * @author adath325
  */
-public class Sale {
+public class Sale implements Serializable {
 	private String date;
 	private Customer customer;
 	
 	private Collection<SaleItem> items = new ArrayList<>();
+
+	public Sale() {
+	}
 
 	public Sale(String date, Customer customer) {
 		this.date = date;

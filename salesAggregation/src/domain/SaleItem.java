@@ -1,14 +1,19 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  * A domain class for representing an individual sale item.
  * 
  * @author adath325
  */
-public class SaleItem {
+public class SaleItem implements Serializable {
 	private String productId;
 	private Double quantity;
 	private Double price;
+
+	public SaleItem() {
+	}
 
 	public SaleItem(String productId, Double quantity, Double price) {
 		this.productId = productId;
