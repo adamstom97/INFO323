@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
  *
  * @author adath325
  */
-public interface ISalesAggregation extends Remote {
+public interface ISalesAgg extends Remote {
 
     /**
      * Saves a new instance of Sale in a collection.

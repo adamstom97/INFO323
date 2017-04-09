@@ -14,9 +14,9 @@ import java.rmi.registry.Registry;
  * 
  * @author adamstom97
  */
-public class SalesAggregationServer {
+public class Server {
     public static void main(String[] args) throws RemoteException {
-        SalesAggregationImpl object = new SalesAggregationImpl();
+        SalesAggImpl object = new SalesAggImpl();
         Registry registry = LocateRegistry.createRegistry(1099);
         registry.rebind("sales", object);
         System.out.println("Server is ready.");
