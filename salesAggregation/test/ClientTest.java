@@ -61,31 +61,5 @@ public class ClientTest {
     @Test
     public void newSaleTest() throws RemoteException {
         server.newSale(sale);
-        
-        Collection<Sale> testSales = server.getSales();
-        assertEquals("Is the collection of sales the correct length?", 1, 
-                testSales.size());
-        
-        Sale testSale = testSales.iterator().next();
-        assertEquals("Does the stored sale have the correct date?", "13/04/17",
-                testSale.getDate());
-        
-        Customer testCustomer = testSale.getCustomer();
-        assertEquals("Does the stored customer have the correct gender?", 
-                (Character) 'M', testCustomer.getGender());
-        assertEquals("Does the stored customer have the correct date of birth?",
-                "27/04/97", testCustomer.getDateOfBirth());
-        
-        Collection<SaleItem> testItems = testSale.getItems();
-        assertEquals("Is the collection of items the correct length?", 1, 
-                testItems.size());
-        
-        SaleItem testItem = testItems.iterator().next();
-        assertEquals("Does the stored item have the correct product ID?", 
-                "FW1234", testItem.getProductId());
-        assertEquals("Does the stored item have the correct quantity?", 
-                (Double) 10.0, testItem.getQuantity());
-        assertEquals("Does the stored item have the correct price?", 
-                (Double) 3.5, testItem.getPrice());
     }
 }
