@@ -21,19 +21,18 @@ import javax.ws.rs.PathParam;
 
 @Path("/customers/{customerId}/transactions/{transactionId}")
 public class TransactionResource {
-    private final CustomerDao dao = new CustomerDao();
-    private String customerId;
-    private String transactionId;
+    private final CustomerDao dao;
     private final Transaction resource;
     
     public TransactionResource(@PathParam("customerId") String customerId,
             @PathParam("transactionId") String transactionId) {
-        if (dao.transactionExists(customerId, transactionId)) {
-            this.transactionId = transactionId;
+        dao = new CustomerDao(customerId);
+        
+        if (dao.transactionExists(transactionId)) {
+            this.resource = dao.getTransactionById(transactionId);
         } else {
             throw new NotFoundException("There is no transaction with that ID.");
         }
-        this.resource = dao.getTransactionById(customerId, transactionId);
     }
     
     @GET
@@ -43,6 +42,6 @@ public class TransactionResource {
     
     @DELETE
     public void deleteProduct() {
-        dao.deleteTransaction(customerId, resource);
+        dao.deleteTransaction(resource);
     }
 }

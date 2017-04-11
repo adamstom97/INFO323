@@ -11,16 +11,32 @@ import domain.Transaction;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.NotFoundException;
 
 /**
  * A data access object for the service.
- * 
+ *
  * @author adamstom97
  */
 public class CustomerDao {
+
     private static Map<String, Customer> customers = new HashMap<>();
 
+    // Instances of a specific customer's transaction and coupon collections.
+    private Map<String, Transaction> transactions;
+    private Map<Integer, Coupon> coupons;
+
     public CustomerDao() {
+    }
+
+    // Constructor that initialises the specific customer collections.
+    public CustomerDao(String customerId) {
+        if (customers.containsKey(customerId)) {
+            transactions = customers.get(customerId).getTransactions();
+            coupons = customers.get(customerId).getCoupons();
+        } else {
+            throw new NotFoundException("There is no customer with that ID.");
+        }
     }
 
     public static Map<String, Customer> getCustomers() {
@@ -30,56 +46,51 @@ public class CustomerDao {
     public static void setCustomers(Map<String, Customer> customers) {
         CustomerDao.customers = customers;
     }
-    
-    public Collection<Transaction> getTransactions(String customerId) {
-        Map<String, Transaction> transactions = customers.get(customerId).getTransactions();
+
+    public static void createCustomer(Customer customer) {
+        customers.put(customer.getId(), customer);
+    }
+
+    /* 
+    METHODS FOR TRANSACTIONS AND COUPONS
+    */
+    public Collection<Transaction> getTransactions() {
         return transactions.values();
     }
-    
-    public Collection<Coupon> getCoupons(String customerId) {
-        Map<Integer, Coupon> coupons = customers.get(customerId).getCoupons();
+
+    public Collection<Coupon> getCoupons() {
         return coupons.values();
     }
-    
-    public Transaction getTransactionById(String customerId, String transactionId) {
-        Map<String, Transaction> transactions = customers.get(customerId).getTransactions();
-        Transaction transaction = transactions.get(transactionId);
-        return transaction;        
+
+    public Transaction getTransactionById(String transactionId) {
+        return transactions.get(transactionId);
     }
-    
-    public Coupon getCouponById(String customerId, Integer couponId) {
-        Map<Integer, Coupon> coupons = customers.get(customerId).getCoupons();
-        Coupon coupon = coupons.get(couponId);
-        return coupon;        
+
+    public Coupon getCouponById(Integer couponId) {
+        return coupons.get(couponId);
     }
-    
-    public Boolean transactionExists(String customerId, String transactionId) {
-        Map<String, Transaction> transactions = customers.get(customerId).getTransactions();
+
+    public Boolean transactionExists(String transactionId) {
         return transactions.containsKey(transactionId);
     }
-    
-    public Boolean couponExists(String customerId, Integer couponId) {
-        Map<Integer, Coupon> coupons = customers.get(customerId).getCoupons();
+
+    public Boolean couponExists(Integer couponId) {
         return coupons.containsKey(couponId);
     }
-    
-    public void createTransaction(String customerId, Transaction transaction) {
-        Map<String, Transaction> transactions = customers.get(customerId).getTransactions();
+
+    public void createTransaction(Transaction transaction) {
         transactions.put(transaction.getId(), transaction);
     }
-    
-    public void createCoupon(String customerId, Coupon coupon) {
-        Map<Integer, Coupon> coupons = customers.get(customerId).getCoupons();
+
+    public void createCoupon(Coupon coupon) {
         coupons.put(coupon.getId(), coupon);
     }
-    
-    public void deleteTransaction(String customerId, Transaction transaction) {
-        Map<String, Transaction> transactions = customers.get(customerId).getTransactions();
+
+    public void deleteTransaction(Transaction transaction) {
         transactions.remove(transaction.getId());
     }
-    
-    public void deleteCoupon(String customerId, Coupon coupon) {
-        Map<Integer, Coupon> coupons = customers.get(customerId).getCoupons();
+
+    public void deleteCoupon(Coupon coupon) {
         coupons.remove(coupon.getId());
     }
 }
