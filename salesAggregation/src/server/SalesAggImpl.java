@@ -1,4 +1,4 @@
-package remote;
+package server;
 
 import domain.Sale;
 import java.rmi.RemoteException;
