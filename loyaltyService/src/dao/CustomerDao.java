@@ -93,4 +93,8 @@ public class CustomerDao {
     public void deleteCoupon(Coupon coupon) {
         coupons.remove(coupon.getId());
     }
+    
+    public void updateCoupon(Integer couponId, Coupon updatedCoupon) {
+        coupons.put(couponId, updatedCoupon);
+    }
 }

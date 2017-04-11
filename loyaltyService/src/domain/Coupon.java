@@ -6,6 +6,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A domain class for representing a coupon.
@@ -54,4 +55,31 @@ public class Coupon implements Serializable {
     public String toString() {
         return "Coupon{" + "id=" + id + ", points=" + points + ", used=" + used + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Coupon other = (Coupon) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
