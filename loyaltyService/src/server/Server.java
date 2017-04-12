@@ -7,6 +7,8 @@ package server;
 
 import filters.CorsFilter;
 import filters.DebugFilter;
+import filters.ExceptionLogger;
+import filters.ExceptionMessageHandler;
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
@@ -33,6 +35,9 @@ public class Server {
 
 		config.register(DebugFilter.class);
 		config.register(CorsFilter.class);
+		
+		config.register(ExceptionMessageHandler.class);
+		config.register(ExceptionLogger.class);
 
 		config.register(CouponResource.class);
 		config.register(CouponsResource.class);
