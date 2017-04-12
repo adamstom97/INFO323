@@ -8,12 +8,15 @@ package domain;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A domain class for representing a customer.
  * 
  * @author adamstom97
  */
+
+@XmlRootElement
 public class Customer implements Serializable {
     private String id;
     private Map<String, Transaction> transactions = new HashMap<>();

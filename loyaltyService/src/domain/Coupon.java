@@ -7,12 +7,15 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A domain class for representing a coupon.
  * 
  * @author adamstom97
  */
+
+@XmlRootElement
 public class Coupon implements Serializable {
     private Integer id;
     private Integer points;
@@ -80,6 +83,4 @@ public class Coupon implements Serializable {
         }
         return true;
     }
-    
-    
 }

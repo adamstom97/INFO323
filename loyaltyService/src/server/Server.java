@@ -12,6 +12,7 @@ import filters.ExceptionMessageHandler;
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
+import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import resource.CouponResource;
@@ -43,6 +44,7 @@ public class Server {
 		config.register(PointsResource.class);
 		config.register(TransactionResource.class);
 		config.register(TransactionsResource.class);
+                config.register(DeclarativeLinkingFeature.class);
 
 		URI baseUri = new URI("http://localhost:8081/");
 		JdkHttpServerFactory.createHttpServer(baseUri, config);

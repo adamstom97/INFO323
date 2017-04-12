@@ -7,12 +7,15 @@ package domain;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A domain class for representing a transaction.
  * 
  * @author adamstom97
  */
+
+@XmlRootElement
 public class Transaction implements Serializable {
     private String id;
     private String shop;
