@@ -34,8 +34,7 @@ public class Server {
 		ResourceConfig config = new ResourceConfig();
 
 		config.register(DebugFilter.class);
-		config.register(CorsFilter.class);
-		
+		config.register(CorsFilter.class);		
 		config.register(ExceptionMessageHandler.class);
 		config.register(ExceptionLogger.class);
 
