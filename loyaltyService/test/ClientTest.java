@@ -41,19 +41,16 @@ public class ClientTest {
     
     @BeforeClass
     public static void setUpClass() {
-        Customer customer = new Customer("CustID");
-        CustomerDao.createCustomer(customer);
-        
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
-        transactions = client.target("http://localhost:8081/customer/CustID/transactions/");
-        coupons = client.target("http://localhost:8081/customer/CustID/coupons/");
-        points = client.target("http://localhost:8081/customer/CustID/points/");
+		  
+        transactions = client.target("http://localhost:8081/customers/CustID/transactions/");
+        coupons = client.target("http://localhost:8081/customers/CustID/coupons/");
+        points = client.target("http://localhost:8081/customers/CustID/points/");
     }
     
     @AfterClass
     public static void tearDownClass() {
-        CustomerDao.setCustomers(new HashMap<>());
     }
     
     @Before

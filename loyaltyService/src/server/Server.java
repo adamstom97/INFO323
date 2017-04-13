@@ -5,6 +5,8 @@
  */
 package server;
 
+import dao.CustomerDao;
+import domain.Customer;
 import filters.CorsFilter;
 import filters.DebugFilter;
 import filters.ExceptionLogger;
@@ -12,7 +14,6 @@ import filters.ExceptionMessageHandler;
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
-import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import resource.CouponResource;
@@ -35,19 +36,22 @@ public class Server {
 		ResourceConfig config = new ResourceConfig();
 
 		config.register(DebugFilter.class);
-		config.register(CorsFilter.class);		
-		config.register(ExceptionMessageHandler.class);
+		config.register(CorsFilter.class);
 		config.register(ExceptionLogger.class);
+		config.register(ExceptionMessageHandler.class);
 
 		config.register(CouponResource.class);
 		config.register(CouponsResource.class);
 		config.register(PointsResource.class);
 		config.register(TransactionResource.class);
 		config.register(TransactionsResource.class);
-                config.register(DeclarativeLinkingFeature.class);
 
 		URI baseUri = new URI("http://localhost:8081/");
 		JdkHttpServerFactory.createHttpServer(baseUri, config);
 		System.out.println("Service Ready on " + baseUri);
+		
+		//
+		Customer customer = new Customer("CustID");
+		CustomerDao.createCustomer(customer);
 	}
 }
