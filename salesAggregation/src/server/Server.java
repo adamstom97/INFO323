@@ -11,10 +11,11 @@ import java.rmi.registry.Registry;
 
 /**
  * A server for running the Sales Aggregation service.
- * 
+ *
  * @author adamstom97
  */
 public class Server {
+
     public static void main(String[] args) throws RemoteException {
         SalesAggImpl object = new SalesAggImpl();
         Registry registry = LocateRegistry.createRegistry(1099);

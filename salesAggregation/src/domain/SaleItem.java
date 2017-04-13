@@ -4,50 +4,51 @@ import java.io.Serializable;
 
 /**
  * A domain class for representing an individual sale item.
- * 
+ *
  * @author adath325
  */
 public class SaleItem implements Serializable {
-	private String productId;
-	private Double quantity;
-	private Double price;
 
-	public SaleItem() {
-	}
+    private String productId;
+    private Double quantity;
+    private Double price;
 
-	public SaleItem(String productId, Double quantity, Double price) {
-		this.productId = productId;
-		this.quantity = quantity;
-		this.price = price;
-	}
+    public SaleItem() {
+    }
 
-	public String getProductId() {
-		return productId;
-	}
+    public SaleItem(String productId, Double quantity, Double price) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
+    public String getProductId() {
+        return productId;
+    }
 
-	public Double getQuantity() {
-		return quantity;
-	}
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
-	public void setQuantity(Double quantity) {
-		this.quantity = quantity;
-	}
+    public Double getQuantity() {
+        return quantity;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public Double getPrice() {
+        return price;
+    }
 
-	@Override
-	public String toString() {
-		return "SaleItem{" + "productId=" + productId + ", quantity=" + quantity +
-				  ", price=" + price + '}';
-	}	
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "SaleItem{" + "productId=" + productId + ", quantity=" + quantity
+                + ", price=" + price + '}';
+    }
 }

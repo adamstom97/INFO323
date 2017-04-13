@@ -6,50 +6,51 @@ import java.util.Collection;
 
 /**
  * A domain class for representing a sale.
- * 
+ *
  * @author adath325
  */
 public class Sale implements Serializable {
-	private String date;
-	private Customer customer;
-	
-	private Collection<SaleItem> items = new ArrayList<>();
 
-	public Sale() {
-	}
+    private String date;
+    private Customer customer;
 
-	public Sale(String date, Customer customer) {
-		this.date = date;
-		this.customer = customer;
-	}
+    private Collection<SaleItem> items = new ArrayList<>();
 
-	public String getDate() {
-		return date;
-	}
+    public Sale() {
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public Sale(String date, Customer customer) {
+        this.date = date;
+        this.customer = customer;
+    }
 
-	public Customer getCustomer() {
-		return customer;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public Collection<SaleItem> getItems() {
-		return items;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
 
-	public void setItems(Collection<SaleItem> items) {
-		this.items = items;
-	}
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-	@Override
-	public String toString() {
-		return "Sale{" + "date=" + date + ", customer=" + customer + ", items=" + 
-				  items + '}';
-	}
+    public Collection<SaleItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Collection<SaleItem> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Sale{" + "date=" + date + ", customer=" + customer + ", items="
+                + items + '}';
+    }
 }

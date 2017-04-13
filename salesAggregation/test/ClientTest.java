@@ -23,17 +23,18 @@ import server.ISalesAgg;
  * @author adamstom97
  */
 public class ClientTest {
+
     private static ISalesAgg server;
-    
+
     public ClientTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry("localhost");
         server = (ISalesAgg) registry.lookup("sales");
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
@@ -43,11 +44,11 @@ public class ClientTest {
         SaleItem item = new SaleItem("FW1234", 10.0, 3.5);
         Collection<SaleItem> items = new ArrayList<>();
         items.add(item);
-        
+
         Customer customer = new Customer('M', "27/04/97");
         Sale sale = new Sale("13/04/17", customer);
         sale.setItems(items);
-        
+
         server.newSale(sale);
     }
 }
