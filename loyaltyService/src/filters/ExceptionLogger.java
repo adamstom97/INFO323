@@ -24,39 +24,43 @@ import org.slf4j.LoggerFactory;
  */
 public class ExceptionLogger implements ApplicationEventListener {
 
-	@Override
-	public void onEvent(ApplicationEvent event) {
-	}
+    @Override
+    public void onEvent(ApplicationEvent event) {
+    }
 
-	@Override
-	public RequestEventListener onRequest(RequestEvent requestEvent) {
-		return new ExceptionRequestEventListener();
-	}
+    @Override
+    public RequestEventListener onRequest(RequestEvent requestEvent) {
+        return new ExceptionRequestEventListener();
+    }
 
-	public static class ExceptionRequestEventListener implements RequestEventListener {
+    public static class ExceptionRequestEventListener
+            implements RequestEventListener {
 
-		private final Logger logger;
+        private final Logger logger;
 
-		public ExceptionRequestEventListener() {
-			logger = LoggerFactory.getLogger(getClass());
-		}
+        public ExceptionRequestEventListener() {
+            logger = LoggerFactory.getLogger(getClass());
+        }
 
-		@Override
-		public void onEvent(RequestEvent event) {
-			if (event.getType() == Type.ON_EXCEPTION) {
-				Throwable t = event.getException();
+        @Override
+        public void onEvent(RequestEvent event) {
+            if (event.getType() == Type.ON_EXCEPTION) {
+                Throwable t = event.getException();
 
-				if (t instanceof WebApplicationException) {
-					WebApplicationException wex = (WebApplicationException) t;
-					// only log WebApplicationExceptions if they are unexpected (>=500)
-					if (wex.getResponse().getStatus() >= 500) {
-						logger.error(t.getCause().getMessage(), t.getCause());
-					}
-				} else {
-					// some other exception, so log it.
-					logger.error(t.getMessage(), t);
-				}
-			}
-		}
-	}
+                if (t instanceof WebApplicationException) {
+                    WebApplicationException wex = (WebApplicationException) t;
+             // only log WebApplicationExceptions if they are unexpected (>=500)
+                    if (wex.getResponse().getStatus()
+                            >= 500) {
+                        logger.error(t.getCause()
+                                .getMessage(),
+                                t.getCause());
+                    }
+                } else {
+                    // some other exception, so log it.
+                    logger.error(t.getMessage(), t);
+                }
+            }
+        }
+    }
 }

@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A domain class for representing a transaction.
- * 
+ *
  * @author adamstom97
  */
-
 @XmlRootElement
 public class Transaction implements Serializable {
+
     private String id;
     private String shop;
     private Integer points;
@@ -56,7 +56,8 @@ public class Transaction implements Serializable {
 
     @Override
     public String toString() {
-        return "Transaction{" + "id=" + id + ", shop=" + shop + ", points=" + points + '}';
+        return "Transaction{" + "id=" + id + ", shop=" + shop + ", points="
+                + points + '}';
     }
 
     @Override

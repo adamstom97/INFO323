@@ -14,7 +14,9 @@ import java.util.Map;
 import javax.ws.rs.NotFoundException;
 
 /**
- * A data access object for the service.
+ * A data access object for the service. Contains a list of customers, and
+ * methods to access and alter the lists of transactions and coupons for each of
+ * those customers.
  *
  * @author adamstom97
  */
@@ -39,6 +41,9 @@ public class CustomerDao {
         }
     }
 
+    /* 
+    METHODS FOR CUSTOMERS
+     */
     public static Map<String, Customer> getCustomers() {
         return customers;
     }
@@ -53,7 +58,7 @@ public class CustomerDao {
 
     /* 
     METHODS FOR TRANSACTIONS AND COUPONS
-    */
+     */
     public Collection<Transaction> getTransactions() {
         return transactions.values();
     }
@@ -93,7 +98,7 @@ public class CustomerDao {
     public void deleteCoupon(Coupon coupon) {
         coupons.remove(coupon.getId());
     }
-    
+
     public void updateCoupon(Integer couponId, Coupon updatedCoupon) {
         coupons.put(couponId, updatedCoupon);
     }

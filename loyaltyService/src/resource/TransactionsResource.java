@@ -20,21 +20,23 @@ import javax.ws.rs.core.UriInfo;
 @Path("/customers/{customerId}/transactions")
 public class TransactionsResource {
 
-	private final CustomerDao dao;
+    private final CustomerDao dao;
 
-	public TransactionsResource(@PathParam("customerId") String customerId) {
-		dao = new CustomerDao(customerId);
-	}
+    public TransactionsResource(@PathParam("customerId") String customerId) {
+        dao = new CustomerDao(customerId);
+    }
 
-	@GET
-	public Collection<Transaction> getTransactions() {
-		return dao.getTransactions();
-	}
+    @GET
+    public Collection<Transaction> getTransactions() {
+        return dao.getTransactions();
+    }
 
-	@POST
-	public Response createTransaction(Transaction transaction, @Context UriInfo uri) {
-		dao.createTransaction(transaction);
-		URI newURI = uri.getAbsolutePathBuilder().path(transaction.getId()).build();
-		return Response.created(newURI).build();
-	}
+    @POST
+    public Response createTransaction(Transaction transaction, 
+            @Context UriInfo uri) {
+        dao.createTransaction(transaction);
+        URI newURI = uri.getAbsolutePathBuilder()
+                .path(transaction.getId()).build();
+        return Response.created(newURI).build();
+    }
 }

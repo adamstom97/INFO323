@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A domain class for representing a coupon.
- * 
+ *
  * @author adamstom97
  */
-
 @XmlRootElement
 public class Coupon implements Serializable {
+
     private Integer id;
     private Integer points;
     private Boolean used;
@@ -56,7 +56,8 @@ public class Coupon implements Serializable {
 
     @Override
     public String toString() {
-        return "Coupon{" + "id=" + id + ", points=" + points + ", used=" + used + '}';
+        return "Coupon{" + "id=" + id + ", points=" + points + ", used="
+                + used + '}';
     }
 
     @Override

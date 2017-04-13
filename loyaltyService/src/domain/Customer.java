@@ -12,12 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A domain class for representing a customer.
- * 
+ *
  * @author adamstom97
  */
-
 @XmlRootElement
 public class Customer implements Serializable {
+
     private String id;
     private Map<String, Transaction> transactions = new HashMap<>();
     private Map<Integer, Coupon> coupons = new HashMap<>();
@@ -55,6 +55,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Customer{" + "id=" + id + ", transactions=" + transactions + ", coupons=" + coupons + '}';
+        return "Customer{" + "id=" + id + ", transactions=" + transactions
+                + ", coupons=" + coupons + '}';
     }
 }
