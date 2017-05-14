@@ -1,4 +1,4 @@
-package router;
+package create;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
@@ -9,7 +9,7 @@ import org.apache.camel.impl.DefaultCamelContext;
  *
  * @author adath325
  */
-public class LoyaltyRouter {
+public class CreateRouter {
 
 	public static void main(String[] args) throws Exception {
 		CamelContext camel = new DefaultCamelContext();
@@ -19,7 +19,7 @@ public class LoyaltyRouter {
 
 		activeMqFactory.setTrustAllPackages(true);
 
-		camel.addRoutes(new LoyaltyBuilder());
+		camel.addRoutes(new CreateBuilder());
 
 		camel.setTracing(false);
 		camel.setStreamCaching(true);

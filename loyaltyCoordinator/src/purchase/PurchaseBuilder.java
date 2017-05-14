@@ -1,4 +1,4 @@
-package router;
+package purchase;
 
 import domain.Sale;
 import javax.swing.JOptionPane;
@@ -10,11 +10,10 @@ import org.apache.camel.model.dataformat.JsonLibrary;
  *
  * @author adath325
  */
-public class LoyaltyBuilder extends RouteBuilder {
+public class PurchaseBuilder extends RouteBuilder {
 
 	@Override
 	public void configure() {
-		// Customer Makes Purchase
 		from("imaps://outlook.office365.com?username=adath325@student.otago.ac.nz"
 				  + "&password=" + getPassword("Enter your E-Mail password")
 				  + "&searchTerm.subject=Vend:SaleUpdate"
@@ -22,11 +21,12 @@ public class LoyaltyBuilder extends RouteBuilder {
 				  .convertBodyTo(String.class).log("${body}")
 				  .to("jms:queue:sale-event");
 		from("jms:queue:sale-event")
-				  .setHeader("id").jsonpath("$.id") 
-				  .setHeader("customerId").jsonpath("$.customer_id") 
+				  .setHeader("id").jsonpath("$.id")
+				  .setHeader("customerId").jsonpath("$.customer_id")
 				  .setHeader("price").jsonpath("$.totals.total_price")
 				  .multicast()
 				  .to("jms:queue:new-sale", "jms:queue:new-transaction");
+
 		from("jms:queue:new-sale").unmarshal().json(JsonLibrary.Gson, Sale.class)
 				  .to("rmi://localhost:1099/sales"
 							 + "?remoteInterfaces=server.ISalesAgg"
