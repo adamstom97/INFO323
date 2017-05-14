@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,46 +12,48 @@ import java.util.Collection;
  */
 public class Sale implements Serializable {
 
-    private String date;
-    private Customer customer;
+	@SerializedName("created_at")
+	private String date;
+	private Customer customer;
 
-    private Collection<SaleItem> items = new ArrayList<>();
+	@SerializedName("register_sale_products")
+	private Collection<SaleItem> items = new ArrayList<>();
 
-    public Sale() {
-    }
+	public Sale() {
+	}
 
-    public Sale(String date, Customer customer) {
-        this.date = date;
-        this.customer = customer;
-    }
+	public Sale(String date, Customer customer) {
+		this.date = date;
+		this.customer = customer;
+	}
 
-    public String getDate() {
-        return date;
-    }
+	public String getDate() {
+		return date;
+	}
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+	public void setDate(String date) {
+		this.date = date;
+	}
 
-    public Customer getCustomer() {
-        return customer;
-    }
+	public Customer getCustomer() {
+		return customer;
+	}
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-    public Collection<SaleItem> getItems() {
-        return items;
-    }
+	public Collection<SaleItem> getItems() {
+		return items;
+	}
 
-    public void setItems(Collection<SaleItem> items) {
-        this.items = items;
-    }
+	public void setItems(Collection<SaleItem> items) {
+		this.items = items;
+	}
 
-    @Override
-    public String toString() {
-        return "Sale{" + "date=" + date + ", customer=" + customer + ", items="
-                + items + '}';
-    }
+	@Override
+	public String toString() {
+		return "Sale{" + "date=" + date + ", customer=" + customer + ", items="
+				  + items + '}';
+	}
 }

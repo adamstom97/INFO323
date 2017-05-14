@@ -23,6 +23,7 @@ public class SalesAggImpl extends UnicastRemoteObject implements
     @Override
     public void newSale(Sale sale) throws RemoteException {
         sales.add(sale);
+		  System.out.println("New sale added:" + sale.toString());
     }
 
     public Collection<Sale> getSales() {
