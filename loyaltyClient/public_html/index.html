@@ -1,11 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="InventoryApp">
 	<head>
-		<title>TODO supply a title</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Loyalty Service</title>
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
+		<script src="scripts/angular.min.js"></script>
+		<script src="scripts/angular-resource.min.js"></script>
+		<script src="scripts/loyaltyClient.js">
+			/* global LoyaltyController */
+			/* global customer */
+			/* global equivalent */
+			/* gloabl messages */
+		</script>
 	</head>
 	<body>
-      <div>TODO write content</div>
+		<div id="content" ng-controller="LoyaltyController">
+			<h1>Loyalty Service</h1>
+			<form action="#">
+				<fieldset>
+					<legend>Login</legend>
+					<div class="flexiform">
+						<div class="formlabels">
+							<label>Email Address:</label>
+						</div>
+						<div class="formfields">
+							<input type="text" value="email"/>
+						</div>
+					</div>
+					<button type="button" ng-click="createProduct()">Sign in</button>
+				</fieldset>
+				<fieldset>
+					<legend>Your Details</legend>
+					<div class="flexiform">
+						<div class="formlabels">
+							<label>Rewards ID:</label>
+							<label>Name:</label>
+						</div>
+						<div class="formfields">
+							<input type="text" value="ID" ng-model="customer.id"/>
+							<input type="text" value="Name" ng-model="customer.name"/>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<legend>Create a Coupon</legend>
+					<div class="flexiform">
+						<div class="formlabels">
+							<label>Available points:</label>
+							<label>Points to use:</label>
+							<label>Equivalent to $:</label>
+						</div>
+						<div class="formfields">
+							<input type="text" value="unused" ng-model="customer.unused"/>
+							<input type="text" value="toUse"/>
+							<input type="text" value="equivalent" ng-model="equivalent"/>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<p>Present this barcode when you next make a purchase.</p>
+				</fieldset>
+			</form>
+			<p>{{messages}}</p>
+		</div>
 	</body>
 </html>
