@@ -14,12 +14,12 @@ import java.rmi.registry.Registry;
  *
  * @author adamstom97
  */
-public class Server {
+public class AggregationServer {
 
     public static void main(String[] args) throws RemoteException {
         SalesAggImpl object = new SalesAggImpl();
         Registry registry = LocateRegistry.createRegistry(1099);
         registry.rebind("sales", object);
-        System.out.println("Server is ready.");
+        System.out.println("Aggregation service ready.");
     }
 }

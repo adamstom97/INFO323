@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 public class Sale implements Serializable {
 
-	@SerializedName("created_at")
+	@SerializedName("sale_date")
 	private String date;
 	private Customer customer;
 
