@@ -27,7 +27,7 @@ import resource.TransactionsResource;
  *
  * @author adamstom97
  */
-public class Server {
+public class LoyaltyServer {
 
     public static void main(String[] args) throws URISyntaxException {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
@@ -50,9 +50,10 @@ public class Server {
         JdkHttpServerFactory.createHttpServer(baseUri, config);
 
         // Hard coded customer for testing.
-        Customer customer = new Customer("CustID");
+        Customer customer = new Customer(
+					 "06bf537b-c77f-11e7-ff13-0c871e86361a");
         CustomerDao.createCustomer(customer);
         
-        System.out.println("Service ready on " + baseUri);
+        System.out.println("Loyalty service ready on " + baseUri);
     }
 }
