@@ -57,8 +57,8 @@ public class ClientTest {
     @Before
     public void setUp() {
         transaction = new Transaction("1234", "Dunedin", 5);
-        coupon1 = new Coupon(1, 2, true);
-        coupon2 = new Coupon(2, 3, false);
+        coupon1 = new Coupon(new Long(1), 2, true);
+        coupon2 = new Coupon(new Long(2), 3, false);
 
         transactions.request().post(Entity.entity(transaction, 
                 "application/json"));
@@ -119,7 +119,7 @@ public class ClientTest {
 
     @Test
     public void testPutCoupon() {
-        Coupon couponPut = new Coupon(2, 3, true);
+        Coupon couponPut = new Coupon(new Long (2), 3, true);
         coupons.path(String.valueOf(coupon2.getId()))
                 .request().put(Entity.entity(couponPut, "text/xml"));
         Coupon couponGet = coupons.path(String.valueOf(coupon2.getId()))
@@ -127,7 +127,7 @@ public class ClientTest {
         Assert.assertEquals("Test PUT coupon with XML", couponGet.getUsed(), 
                 couponPut.getUsed());
 
-        couponPut = new Coupon(2, 3, false);
+        couponPut = new Coupon(new Long(2), 3, false);
         coupons.path(String.valueOf(coupon2.getId()))
                 .request().put(Entity.entity(couponPut, "application/json"));
         couponGet = coupons.path(String.valueOf(coupon2.getId()))

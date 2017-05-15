@@ -17,24 +17,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Coupon implements Serializable {
 
-    private Integer id;
+    private Long id = System.currentTimeMillis();
     private Integer points;
-    private Boolean used;
+    private Boolean used = false;
 
     public Coupon() {
     }
 
-    public Coupon(Integer id, Integer points, Boolean used) {
+    public Coupon(Long id, Integer points, Boolean used) {
         this.id = id;
         this.points = points;
         this.used = used;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

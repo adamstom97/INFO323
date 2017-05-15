@@ -36,6 +36,6 @@ public class CouponsResource {
         dao.createCoupon(coupon);
         URI newURI = uri.getAbsolutePathBuilder()
                 .path(coupon.getId().toString()).build();
-        return Response.created(newURI).build();
+        return Response.created(newURI).entity(coupon).build();
     }
 }

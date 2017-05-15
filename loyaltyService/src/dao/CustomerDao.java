@@ -26,7 +26,7 @@ public class CustomerDao {
 
     // Instances of a specific customer's transaction and coupon collections.
     private Map<String, Transaction> transactions;
-    private Map<Integer, Coupon> coupons;
+    private Map<Long, Coupon> coupons;
 
     public CustomerDao() {
     }
@@ -71,7 +71,7 @@ public class CustomerDao {
         return transactions.get(transactionId);
     }
 
-    public Coupon getCouponById(Integer couponId) {
+    public Coupon getCouponById(Long couponId) {
         return coupons.get(couponId);
     }
 
@@ -79,7 +79,7 @@ public class CustomerDao {
         return transactions.containsKey(transactionId);
     }
 
-    public Boolean couponExists(Integer couponId) {
+    public Boolean couponExists(Long couponId) {
         return coupons.containsKey(couponId);
     }
 
@@ -99,7 +99,7 @@ public class CustomerDao {
         coupons.remove(coupon.getId());
     }
 
-    public void updateCoupon(Integer couponId, Coupon updatedCoupon) {
+    public void updateCoupon(Long couponId, Coupon updatedCoupon) {
         coupons.put(couponId, updatedCoupon);
     }
 }

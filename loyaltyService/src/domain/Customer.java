@@ -20,7 +20,7 @@ public class Customer implements Serializable {
 
     private String id;
     private Map<String, Transaction> transactions = new HashMap<>();
-    private Map<Integer, Coupon> coupons = new HashMap<>();
+    private Map<Long, Coupon> coupons = new HashMap<>();
 
     public Customer() {
     }
@@ -45,11 +45,11 @@ public class Customer implements Serializable {
         this.transactions = transactions;
     }
 
-    public Map<Integer, Coupon> getCoupons() {
+    public Map<Long, Coupon> getCoupons() {
         return coupons;
     }
 
-    public void setCoupons(Map<Integer, Coupon> coupons) {
+    public void setCoupons(Map<Long, Coupon> coupons) {
         this.coupons = coupons;
     }
 

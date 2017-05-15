@@ -25,10 +25,10 @@ public class CouponResource {
 
     private final CustomerDao dao;
     private final Coupon resource;
-    private Integer couponId;
+    private Long couponId;
 
     public CouponResource(@PathParam("customerId") String customerId,
-            @PathParam("couponId") Integer couponId) {
+            @PathParam("couponId") Long couponId) {
         dao = new CustomerDao(customerId);
 
         if (dao.couponExists(couponId)) {
