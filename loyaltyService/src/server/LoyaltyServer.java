@@ -51,7 +51,7 @@ public class LoyaltyServer {
 
         // Hard coded customer for testing.
         Customer customer = new Customer(
-					 "06bf537b-c77f-11e7-ff13-0c871e86361a");
+					 "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
         CustomerDao.createCustomer(customer);
         
         System.out.println("Loyalty service ready on " + baseUri);
