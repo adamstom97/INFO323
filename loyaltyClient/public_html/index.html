@@ -34,8 +34,8 @@
 							<label>Name:</label>
 						</div>
 						<div class="formfields">
-							<input type="text" id="customerId" ng-model="customer.id"/>
-							<input type="text" id="customerName" ng-model="customer.name"/>
+							<input type="text" id="customerId" ng-model="customer.id" disabled />
+							<input type="text" id="customerName" ng-model="customer.name" disabled />
 						</div>
 					</div>
 				</fieldset>
@@ -48,9 +48,9 @@
 							<label>Equivalent to $:</label>
 						</div>
 						<div class="formfields">
-							<input type="text" id="unused"/>
-							<input type="text" />
-							<input type="text"/>
+							<input type="text" id="available" ng-model="available" disabled />
+							<input type="text" id="wanted" ng-change="updateEquivalent()"/>
+							<input type="text" id="equivalent" disabled />
 						</div>
 					</div>
 					<button type="button" ng-click="createCoupon()">Create coupon</button>
