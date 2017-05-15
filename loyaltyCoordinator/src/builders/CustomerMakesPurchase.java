@@ -12,7 +12,7 @@ import org.apache.camel.model.dataformat.JsonLibrary;
  *
  * @author adath325
  */
-public class PurchaseBuilder extends RouteBuilder {
+public class CustomerMakesPurchase extends RouteBuilder {
 
 	@Override
 	public void configure() {
@@ -36,11 +36,11 @@ public class PurchaseBuilder extends RouteBuilder {
 							 + "&method=newSale");
 
 		from("jms:queue:new-transaction")
-				  .setHeader("points").method(PurchaseBuilder.class, 
+				  .setHeader("points").method(CustomerMakesPurchase.class, 
 							 "calculatePoints(${headers.price})")
 				  .to("jms:queue:calculated-points");
 		from("jms:queue:calculated-points")
-				  .bean(PurchaseBuilder.class, "createTransaction("
+				  .bean(CustomerMakesPurchase.class, "createTransaction("
 							 + "${headers.transactionId}, ${headers.shop}, "
 							 + "${headers.points})")
 				  .to("jms:queue:send-transaction");

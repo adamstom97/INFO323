@@ -1,7 +1,7 @@
-import builders.CreateBuilder;
-import builders.PointsBuilder;
-import builders.PurchaseBuilder;
-import builders.UseBuilder;
+import builders.CustomerCreatesCoupon;
+import builders.CustomerViewsPoints;
+import builders.CustomerMakesPurchase;
+import builders.CustomerUsesCoupon;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
@@ -21,10 +21,10 @@ public class LoyaltyRouter {
 
 		activeMqFactory.setTrustAllPackages(true);
 
-		camel.addRoutes(new CreateBuilder());
-		camel.addRoutes(new PointsBuilder());
-		camel.addRoutes(new PurchaseBuilder());
-		camel.addRoutes(new UseBuilder());
+		camel.addRoutes(new CustomerCreatesCoupon());
+		camel.addRoutes(new CustomerViewsPoints());
+		camel.addRoutes(new CustomerMakesPurchase());
+		camel.addRoutes(new CustomerUsesCoupon());
 
 		camel.setTracing(false);
 		camel.setStreamCaching(true);
