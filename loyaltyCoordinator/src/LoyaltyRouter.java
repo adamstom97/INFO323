@@ -1,5 +1,7 @@
-package create;
-
+import builders.CreateBuilder;
+import builders.PointsBuilder;
+import builders.PurchaseBuilder;
+import builders.UseBuilder;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
@@ -9,7 +11,7 @@ import org.apache.camel.impl.DefaultCamelContext;
  *
  * @author adath325
  */
-public class CreateRouter {
+public class LoyaltyRouter {
 
 	public static void main(String[] args) throws Exception {
 		CamelContext camel = new DefaultCamelContext();
@@ -20,6 +22,9 @@ public class CreateRouter {
 		activeMqFactory.setTrustAllPackages(true);
 
 		camel.addRoutes(new CreateBuilder());
+		camel.addRoutes(new PointsBuilder());
+		camel.addRoutes(new PurchaseBuilder());
+		camel.addRoutes(new UseBuilder());
 
 		camel.setTracing(false);
 		camel.setStreamCaching(true);

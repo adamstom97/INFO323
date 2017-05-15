@@ -1,4 +1,4 @@
-package use;
+package builders;
 
 import org.apache.camel.builder.RouteBuilder;
 

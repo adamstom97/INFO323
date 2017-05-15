@@ -1,4 +1,4 @@
-package purchase;
+package builders;
 
 import domain.Sale;
 import domain.Transaction;
