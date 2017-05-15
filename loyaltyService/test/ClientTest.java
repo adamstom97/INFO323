@@ -43,11 +43,11 @@ public class ClientTest {
         Client client = ClientBuilder.newClient(config);
 
         transactions = client.target(
-                "http://localhost:8081/customers/CustID/transactions/");
+                "http://localhost:8081/customers/06bf537b-c7d7-11e7-ff13-2d957f9ff0f0/transactions/");
         coupons = client.target(
-                "http://localhost:8081/customers/CustID/coupons/");
+                "http://localhost:8081/customers/06bf537b-c7d7-11e7-ff13-2d957f9ff0f0/coupons/");
         points = client.target(
-                "http://localhost:8081/customers/CustID/points/");
+                "http://localhost:8081/customers/06bf537b-c7d7-11e7-ff13-2d957f9ff0f0/points/");
     }
 
     @AfterClass

@@ -40,10 +40,10 @@ public class PointsResource {
     @GET
     @Path("/unused")
     public Integer getUnused() {
-        Integer total = 0;
+        Integer total = getTotal();
         for (Coupon coupon : coupons) {
-            if (!coupon.getUsed()) {
-                total += coupon.getPoints();
+            if (coupon.getUsed()) {
+                total -= coupon.getPoints();
             }
         }
         return total;
