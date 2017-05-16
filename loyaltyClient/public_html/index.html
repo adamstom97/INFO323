@@ -49,8 +49,8 @@
 						</div>
 						<div class="formfields">
 							<input type="text" id="available" ng-model="available" disabled />
-							<input type="text" id="wanted" ng-model="calculation" ng-change="updateEquivalent()"/>
-							<input type="text" id="equivalent" ng-model="calculation" value="{{equivalent}}" disabled />
+							<input type="text" id="wanted" ng-model="coupon.points" ng-change="updateEquivalent()"/>
+							<input type="text" id="equivalent" value="{{equivalent}}" disabled />
 						</div>
 					</div>
 					<button type="button" ng-click="createCoupon()">Create coupon</button>
@@ -58,7 +58,7 @@
 				<fieldset>
 					<legend>Coupon</legend>
 					<p>Present this barcode when you next make a purchase.</p>
-					<img id="barcode" src="" alt="A generated barcode."/>
+					<img id="barcode" src="" alt=""/>
 				</fieldset>
 			</form>
 			<p>{{messages}}</p>
