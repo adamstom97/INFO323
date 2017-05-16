@@ -16,36 +16,34 @@ import javax.ws.rs.PathParam;
 @Path("/customers/{customerId}/points")
 public class PointsResource {
 
-    private final CustomerDao dao;
-    private Collection<Transaction> transactions;
-    private Collection<Coupon> coupons;
+	private final CustomerDao dao;
+	private Collection<Transaction> transactions;
+	private Collection<Coupon> coupons;
 
-    public PointsResource(@PathParam("customerId") String customerId) {
-        dao = new CustomerDao(customerId);
+	public PointsResource(@PathParam("customerId") String customerId) {
+		dao = new CustomerDao(customerId);
 
-        transactions = dao.getTransactions();
-        coupons = dao.getCoupons();
-    }
+		transactions = dao.getTransactions();
+		coupons = dao.getCoupons();
+	}
 
-    @GET
-    @Path("/total")
-    public Integer getTotal() {
-        Integer total = 0;
-        for (Transaction t : transactions) {
-            total += t.getPoints();
-        }
-        return total;
-    }
+	@GET
+	@Path("/total")
+	public Integer getTotal() {
+		Integer total = 0;
+		for (Transaction t : transactions) {
+			total += t.getPoints();
+		}
+		return total;
+	}
 
-    @GET
-    @Path("/unused")
-    public Integer getUnused() {
-        Integer total = getTotal();
-        for (Coupon coupon : coupons) {
-            if (coupon.getUsed()) {
-                total -= coupon.getPoints();
-            }
-        }
-        return total;
-    }
+	@GET
+	@Path("/unused")
+	public Integer getUnused() {
+		Integer total = getTotal();
+		for (Coupon coupon : coupons) {
+			total -= coupon.getPoints();
+		}
+		return total;
+	}
 }
