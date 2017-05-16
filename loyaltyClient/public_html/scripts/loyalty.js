@@ -34,6 +34,7 @@ module.controller('LoyaltyController', function ($scope, $resource) {
 		ws2 = new WebSocket("ws://localhost:8087/product");
 		ws2.onmessage = function (event) {
 
+			$scope.$apply();
 		};
 	}
 
@@ -43,20 +44,11 @@ module.controller('LoyaltyController', function ($scope, $resource) {
 	};
 
 	$scope.updateEquivalent = function () {
-		var wanted = document.getElementById("wanted").value;
-		var equivalent = wanted * 10;
-		document.getElementById("equivalent").innerHTML(equivalent);
+		$scope.equivalent = (document.getElementById("wanted").value);
 	};
 
 	$scope.createCoupon = function () {
-		var points = document.getElementById("wanted").value; 
-
-		var couponsResource = $resource('http://localhost\\:8081/customers/:customer/coupons', null, {
-			'getPoints': {transformResponse: function (data, headers, status) {
-					return {value: data};
-				}
-			}});
-		couponsResource.save({"customer": $scope.customer.id}, points);
+		JsBarcode("#barcode", document.getElementById("equivalent").value);
 	};
 }
 );
