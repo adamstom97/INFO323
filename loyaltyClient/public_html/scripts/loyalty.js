@@ -69,8 +69,8 @@ module.controller('LoyaltyController', function ($scope, $resource) {
 				product.type = "coupon";
 				product.name = "adath325 Coupon";
 				product.retail_price = -(newCoupon.points);
-				var json = JSON.stringify(product);
 
+				var json = JSON.stringify(product);
 				ws2.send(json);
 
 				JsBarcode('#barcode', newCoupon.id);
