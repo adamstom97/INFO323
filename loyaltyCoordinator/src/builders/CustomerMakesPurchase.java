@@ -21,12 +21,14 @@ public class CustomerMakesPurchase extends RouteBuilder {
 				  + "&searchTerm.subject=Vend:SaleUpdate"
 				  + "&debugMode=false&folderName=Inbox")
 				  .convertBodyTo(String.class).log("${body}")
-				  .to("jms:queue:sale-event");
+				  .multicast()
+				  .to("jms:queue:sale-event", "jms:queue:sale-event-coupons");
+		
 		from("jms:queue:sale-event")
 				  .setHeader("transactionId").jsonpath("$.id")
 				  .setHeader("customerId").jsonpath("$.customer_id")
 				  .setHeader("shop").jsonpath("$.register_id")
-				  .setHeader("price").jsonpath("$.totals.total_price")
+				  .setHeader("price").jsonpath("$.totals.total_payment")
 				  .multicast()
 				  .to("jms:queue:new-sale", "jms:queue:new-transaction");
 
@@ -39,11 +41,13 @@ public class CustomerMakesPurchase extends RouteBuilder {
 				  .setHeader("points").method(CustomerMakesPurchase.class, 
 							 "calculatePoints(${headers.price})")
 				  .to("jms:queue:calculated-points");
+		
 		from("jms:queue:calculated-points")
 				  .bean(CustomerMakesPurchase.class, "createTransaction("
 							 + "${headers.transactionId}, ${headers.shop}, "
 							 + "${headers.points})")
 				  .to("jms:queue:send-transaction");
+		
 		from("jms:queue:send-transaction")
 				  .marshal().json(JsonLibrary.Gson)
 				  .setProperty("customerId").header("customerId")

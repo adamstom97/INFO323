@@ -17,6 +17,7 @@ public class CustomerCreatesCoupon extends RouteBuilder {
 				  .setHeader("Authorization", constant("Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
 				  .setHeader(Exchange.HTTP_METHOD, constant("POST"))
 				  .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
-				  .to("https4://info323otago.vendhq.com/api/products");
+				  .to("https4://info323otago.vendhq.com/api/products")
+				  .to("jms:queue:http-response");
 	}
 }
