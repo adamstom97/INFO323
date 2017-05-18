@@ -1,6 +1,5 @@
 package builders;
 
-import domain.Coupon;
 import domain.Sale;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
@@ -28,32 +27,28 @@ public class CustomerUsesCoupon extends RouteBuilder {
 				  .setHeader("Authorization", constant("Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
 				  .setHeader(Exchange.HTTP_METHOD, constant("GET"))
 				  .recipientList().simple("https4://info323otago.vendhq.com/api/"
-							 + "products/{exchangeProperty.productId}")
-				  .multicast()
-				  .to("jms:queue:http-response", "direct:queue:full-products");
+							 + "products/${exchangeProperty.productId}")
+				  .to("direct:queue:full-products");
 
 		from("direct:queue:full-products")
-				  .setHeader("productType").jsonpath("$.products[0].type")
-				  .setHeader("productHandle").jsonpath("$.products[0].handle")
-				  .log("${header.productType} - ${header.productHandle}")
+				  .convertBodyTo(String.class)
+				  .setProperty("productType").jsonpath("$.products[0].type")
+				  .setProperty("productHandle").jsonpath("$.products[0].handle")
 				  .choice()
-				  .when().simple("${header.productType} == 'Coupon'")
-				  .to("direct:queue:coupons");
+				  .when().simple("${exchangeProperty.productType} == 'Coupon'")
+				  .to("direct:queue:coupons-get");
 
 		from("direct:queue:coupons-get")
-				  .setProperty("productHandle").header("productHandle")
 				  .removeHeaders("*")
 				  .setHeader(Exchange.HTTP_METHOD, constant("GET"))
 				  .recipientList().simple("http4://localhost:8081/customers/"
 							 + "${exchangeProperty.customerId}/coupons/"
 							 + "${exchangeProperty.productHandle}")
-				  .multicast()
-				  .to("jms:queue:http-response", "direct:queue:coupons-put");
+				  .to("direct:queue:coupons-put");
 
 		from("direct:queue:coupons-put")
-				  .log("${body}")
-				  .unmarshal().json(JsonLibrary.Gson, Coupon.class)
-				  .to("language:simple:${body.setUsed(true)}?transform=true")
+				  .unmarshal().jaxb("domain")
+				  .to("language:simple:${body.setUsed(true)}?transform=false")
 				  .marshal().json(JsonLibrary.Gson)
 				  .removeHeaders("*")
 				  .setHeader(Exchange.HTTP_METHOD, constant("PUT"))
@@ -61,8 +56,8 @@ public class CustomerUsesCoupon extends RouteBuilder {
 				  .recipientList().simple("http4://localhost:8081/customers/"
 							 + "${exchangeProperty.customerId}/coupons/"
 							 + "${exchangeProperty.productHandle}")
-				  .multicast()
-				  .to("jms:queue:http-response", "direct:queue:coupons-done");
+				  .log("Coupon ${exchangeProperty.productHandle} has been used.")
+				  .to("direct:queue:coupons-done");
 		
 		from("direct:queue:coupons-done")
 				  .removeHeaders("*")
@@ -70,7 +65,7 @@ public class CustomerUsesCoupon extends RouteBuilder {
 				  .setHeader("Authorization", constant("Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
 				  .setHeader(Exchange.HTTP_METHOD, constant("DELETE"))
 				  .recipientList().simple("https4://info323otago.vendhq.com/api/"
-							 + "products/{exchangeProperty.productId}")
-				  .to("jms:queue:http-response");
+							 + "products/${exchangeProperty.productId}")
+				  .log("Coupon ${exchangeProperty.productHandle} has been deleted from Vend.");
 	}
 }

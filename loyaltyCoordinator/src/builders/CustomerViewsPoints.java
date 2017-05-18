@@ -20,7 +20,6 @@ public class CustomerViewsPoints extends RouteBuilder {
 				  .setHeader(Exchange.HTTP_METHOD, constant("GET"))
 				  .recipientList().simple("https4://info323otago.vendhq.com/api/"
 							 + "customers?email=${exchangeProperty.email}")
-				  .multicast()
-				  .to("websocket://localhost:8087/customer?sendToAll=true", "jms:queue:http-response");
+				  .to("websocket://localhost:8087/customer?sendToAll=true");
 	}
 }

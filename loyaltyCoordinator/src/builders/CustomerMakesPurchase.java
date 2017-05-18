@@ -27,12 +27,12 @@ public class CustomerMakesPurchase extends RouteBuilder {
 		from("jms:queue:sale-event")
 				  .setHeader("transactionId").jsonpath("$.id")
 				  .setHeader("customerId").jsonpath("$.customer_id")
-				  .setHeader("shop").jsonpath("$.register_id")
 				  .setHeader("price").jsonpath("$.totals.total_payment")
 				  .multicast()
 				  .to("jms:queue:new-sale", "jms:queue:new-transaction");
 
-		from("jms:queue:new-sale").unmarshal().json(JsonLibrary.Gson, Sale.class)
+		from("jms:queue:new-sale")
+				  .unmarshal().json(JsonLibrary.Gson, Sale.class)
 				  .to("rmi://localhost:1099/sales"
 							 + "?remoteInterfaces=server.ISalesAgg"
 							 + "&method=newSale");
@@ -44,7 +44,8 @@ public class CustomerMakesPurchase extends RouteBuilder {
 		
 		from("jms:queue:calculated-points")
 				  .bean(CustomerMakesPurchase.class, "createTransaction("
-							 + "${headers.transactionId}, ${headers.shop}, "
+							 + "${headers.transactionId}, "
+							 + "06bf537b-c7d7-11e7-ff13-2cc53797fce3, "
 							 + "${headers.points})")
 				  .to("jms:queue:send-transaction");
 		
@@ -55,8 +56,7 @@ public class CustomerMakesPurchase extends RouteBuilder {
 				  .setHeader(Exchange.HTTP_METHOD, constant("POST"))
 				  .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
 				  .recipientList().simple("http4://localhost:8081/customers/"
-							 + "${exchangeProperty.customerId}/transactions")
-				  .to("jms:queue:http-response");
+							 + "${exchangeProperty.customerId}/transactions");
 	}
 
 	public static String getPassword(String prompt) {
