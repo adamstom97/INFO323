@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class SaleItem implements Serializable {
 
-	@SerializedName("id")
+	@SerializedName("product_id")
 	private String productId;
 	private Double quantity;
 	private Double price;
