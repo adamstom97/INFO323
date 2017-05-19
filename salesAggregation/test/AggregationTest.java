@@ -22,11 +22,11 @@ import server.ISalesAgg;
  *
  * @author adamstom97
  */
-public class ClientTest {
+public class AggregationTest {
 
     private static ISalesAgg server;
 
-    public ClientTest() {
+    public AggregationTest() {
     }
 
     @BeforeClass
