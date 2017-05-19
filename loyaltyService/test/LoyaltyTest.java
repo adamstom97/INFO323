@@ -24,7 +24,7 @@ import org.junit.Test;
  *
  * @author adamstom97
  */
-public class ClientTest {
+public class LoyaltyTest {
 
     private static WebTarget transactions;
     private static WebTarget coupons;
@@ -34,7 +34,7 @@ public class ClientTest {
     private Coupon coupon1;
     private Coupon coupon2;
 
-    public ClientTest() {
+    public LoyaltyTest() {
     }
 
     @BeforeClass
@@ -180,6 +180,7 @@ public class ClientTest {
         Integer total = points.path("unused")
                 .request("text/plain").get(Integer.class);
         Assert.assertEquals("Test GET total unused points", total, 
-                coupon2.getPoints());
+                (Integer) (transaction.getPoints() - 
+								(coupon1.getPoints() + coupon2.getPoints())));
     }
 }
