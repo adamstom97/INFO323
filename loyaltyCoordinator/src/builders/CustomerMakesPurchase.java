@@ -23,7 +23,7 @@ public class CustomerMakesPurchase extends RouteBuilder {
 				  .convertBodyTo(String.class).log("${body}")
 				  .multicast()
 				  .to("jms:queue:sale-event", "jms:queue:sale-event-coupons");
-		
+
 		from("jms:queue:sale-event")
 				  .setHeader("transactionId").jsonpath("$.id")
 				  .setHeader("customerId").jsonpath("$.customer_id")
@@ -38,17 +38,17 @@ public class CustomerMakesPurchase extends RouteBuilder {
 							 + "&method=newSale");
 
 		from("jms:queue:new-transaction")
-				  .setHeader("points").method(CustomerMakesPurchase.class, 
-							 "calculatePoints(${headers.price})")
+				  .setHeader("points").method(BuilderMethods.class,
+				  "calculatePoints(${headers.price})")
 				  .to("jms:queue:calculated-points");
-		
+
 		from("jms:queue:calculated-points")
-				  .bean(CustomerMakesPurchase.class, "createTransaction("
+				  .bean(BuilderMethods.class, "createTransaction("
 							 + "${headers.transactionId}, "
 							 + "06bf537b-c7d7-11e7-ff13-2cc53797fce3, "
 							 + "${headers.points})")
 				  .to("jms:queue:send-transaction");
-		
+
 		from("jms:queue:send-transaction")
 				  .marshal().json(JsonLibrary.Gson)
 				  .setProperty("customerId").header("customerId")
@@ -69,13 +69,16 @@ public class CustomerMakesPurchase extends RouteBuilder {
 		}
 		return null;
 	}
-	
-	public Integer calculatePoints(Double price) {
-		return price.intValue() / 10;
-	}
-	
-	public Transaction createTransaction(String id, String shop, 
-			  Integer points) {
-		return new Transaction(id, shop, points);
+
+	private class BuilderMethods {
+
+		public Integer calculatePoints(Double price) {
+			return price.intValue() / 10;
+		}
+
+		public Transaction createTransaction(String id, String shop,
+				  Integer points) {
+			return new Transaction(id, shop, points);
+		}
 	}
 }

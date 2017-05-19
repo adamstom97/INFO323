@@ -14,6 +14,9 @@ public class CustomerViewsPoints extends RouteBuilder {
 		from("websocket://localhost:8087/customer")
 				  .log("Received new customer email via WebSocket: ${body}")
 				  .setProperty("email").body()
+				  .to("direct:queue:email-received");
+
+		from("direct:queue:email-received")
 				  .removeHeaders("*")
 				  .setBody(constant(null))
 				  .setHeader("Authorization", constant("Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
