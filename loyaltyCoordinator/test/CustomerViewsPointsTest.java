@@ -47,6 +47,7 @@ public class CustomerViewsPointsTest extends CamelTestSupport {
 
 	private void createMockVendProducts() {
 		MockEndpoint customers = getMockEndpoint("mock:vend");
+		customers.expectedMessageCount(1);
 		customers.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
@@ -59,8 +60,9 @@ public class CustomerViewsPointsTest extends CamelTestSupport {
 	}
 	
 	private void createMockWebsocket() {
-		MockEndpoint customers = getMockEndpoint("mock:ws");
-		customers.whenAnyExchangeReceived(new Processor() {
+		MockEndpoint ws = getMockEndpoint("mock:ws");
+		ws.expectedMessageCount(1);
+		ws.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
 				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);

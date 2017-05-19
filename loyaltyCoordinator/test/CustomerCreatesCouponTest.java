@@ -51,6 +51,7 @@ public class CustomerCreatesCouponTest extends CamelTestSupport {
 
 	private void createMockVendProducts() {
 		MockEndpoint products = getMockEndpoint("mock:vend");
+		products.expectedMessageCount(1); 
 		products.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {

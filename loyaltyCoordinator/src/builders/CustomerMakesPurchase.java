@@ -38,12 +38,12 @@ public class CustomerMakesPurchase extends RouteBuilder {
 							 + "&method=newSale");
 
 		from("jms:queue:new-transaction")
-				  .setHeader("points").method(BuilderMethods.class,
+				  .setHeader("points").method(CustomerMakesPurchase.class,
 				  "calculatePoints(${headers.price})")
 				  .to("jms:queue:calculated-points");
 
 		from("jms:queue:calculated-points")
-				  .bean(BuilderMethods.class, "createTransaction("
+				  .bean(CustomerMakesPurchase.class, "createTransaction("
 							 + "${headers.transactionId}, "
 							 + "06bf537b-c7d7-11e7-ff13-2cc53797fce3, "
 							 + "${headers.points})")
@@ -70,15 +70,12 @@ public class CustomerMakesPurchase extends RouteBuilder {
 		return null;
 	}
 
-	private class BuilderMethods {
+	public Integer calculatePoints(Double price) {
+		return price.intValue() / 10;
+	}
 
-		public Integer calculatePoints(Double price) {
-			return price.intValue() / 10;
-		}
-
-		public Transaction createTransaction(String id, String shop,
-				  Integer points) {
-			return new Transaction(id, shop, points);
-		}
+	public Transaction createTransaction(String id, String shop,
+			  Integer points) {
+		return new Transaction(id, shop, points);
 	}
 }
