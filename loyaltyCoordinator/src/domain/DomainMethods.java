@@ -1,9 +1,5 @@
 package domain;
 
-
-import domain.Transaction;
-
-
 /**
  *
  * @author adath325
@@ -11,7 +7,10 @@ import domain.Transaction;
 public class DomainMethods {
 
 	public Integer calculatePoints(Double price) {
-		return price.intValue() / 10;
+		if (price > 0) {
+			return price.intValue() / 10;
+		}
+		return 0;
 	}
 
 	public Transaction createTransaction(String id, String shop,
