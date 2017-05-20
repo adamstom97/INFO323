@@ -6,6 +6,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 
 /**
+ * A route builder for the CustomerUsesCoupon component interactions.
  *
  * @author adath325
  */
@@ -24,7 +25,8 @@ public class CustomerUsesCoupon extends RouteBuilder {
 				  .setProperty("productId").simple("${body.productId}")
 				  .removeHeaders("*")
 				  .setBody(constant(null))
-				  .setHeader("Authorization", constant("Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
+				  .setHeader("Authorization", constant(
+							 "Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
 				  .setHeader(Exchange.HTTP_METHOD, constant("GET"))
 				  .recipientList().simple("https4://info323otago.vendhq.com/api/"
 							 + "products/${exchangeProperty.productId}")
@@ -58,14 +60,16 @@ public class CustomerUsesCoupon extends RouteBuilder {
 							 + "${exchangeProperty.productHandle}")
 				  .log("Coupon ${exchangeProperty.productHandle} has been used.")
 				  .to("direct:queue:coupons-done");
-		
+
 		from("direct:queue:coupons-done")
 				  .removeHeaders("*")
 				  .setBody(constant(null))
-				  .setHeader("Authorization", constant("Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
+				  .setHeader("Authorization", constant(
+							 "Bearer CjOC4V9CKp10w3EkgLNtR:um8xRZhhaZpRNUXULT"))
 				  .setHeader(Exchange.HTTP_METHOD, constant("DELETE"))
 				  .recipientList().simple("https4://info323otago.vendhq.com/api/"
 							 + "products/${exchangeProperty.productId}")
-				  .log("Coupon ${exchangeProperty.productHandle} has been deleted from Vend.");
+				  .log("Coupon ${exchangeProperty.productHandle} has been "
+							 + "deleted from Vend.");
 	}
 }

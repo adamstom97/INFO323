@@ -1,3 +1,4 @@
+
 import builders.CustomerCreatesCoupon;
 import builders.CustomerViewsPoints;
 import builders.CustomerMakesPurchase;
@@ -8,6 +9,8 @@ import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 
 /**
+ * The router for the loyaltyCoordinator, taking the routes built in the four
+ * RouteBuilder classes in the builders package.
  *
  * @author adath325
  */
@@ -16,8 +19,10 @@ public class LoyaltyRouter {
 	public static void main(String[] args) throws Exception {
 		CamelContext camel = new DefaultCamelContext();
 
-		ActiveMQConnectionFactory activeMqFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
-		camel.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(activeMqFactory));
+		ActiveMQConnectionFactory activeMqFactory = new ActiveMQConnectionFactory(
+				  "tcp://localhost:61616");
+		camel.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(
+				  activeMqFactory));
 
 		activeMqFactory.setTrustAllPackages(true);
 

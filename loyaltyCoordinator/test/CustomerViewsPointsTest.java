@@ -10,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * A test class for the CustomerViewsPoints route builder.
  *
  * @author adath325
  */
@@ -47,29 +48,32 @@ public class CustomerViewsPointsTest extends CamelTestSupport {
 	}
 
 	private void createMockVend() {
-		
+
 		MockEndpoint vend = getMockEndpoint("mock:vend");
-		
+
 		vend.expectedMessageCount(1);
-		
+
 		vend.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
-				assertStringContains(interceptedURI, "https4://info323otago.vendhq.com/api/customers");
+				String interceptedURI = exchng.getIn().getHeader(
+						  "CamelInterceptedEndpoint", String.class);
+				assertStringContains(interceptedURI, 
+						  "https4://info323otago.vendhq.com/api/customers");
 				assertStringContains(interceptedURI, "?email=boris@email.com");
-				
-				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", 
+						  String.class);
 				assertEquals(httpMethod, "GET");
-				
+
 				exchng.getIn().setBody(retrievedCustomer);
 			}
 		});
 	}
-	
+
 	private void createMockWebsocket() {
 		MockEndpoint ws = getMockEndpoint("mock:ws");
-		
+
 		ws.expectedMessageCount(1);
 	}
 

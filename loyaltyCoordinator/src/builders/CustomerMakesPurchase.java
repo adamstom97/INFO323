@@ -9,6 +9,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 
 /**
+ * A route builder for the CustomerMakesPurchase component interactions.
  *
  * @author adath325
  */

@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * A test class for the CustomerUsesCoupon route builder.
  *
  * @author adath325
  */
@@ -69,11 +70,15 @@ public class CustomerUsesCouponTest extends CamelTestSupport {
 		vend.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
-				assertStringContains(interceptedURI, "https4://info323otago.vendhq.com/api/products");
-				assertStringContains(interceptedURI, "0af7b240-abd7-11e7-eddc-3cf42e321e48");
+				String interceptedURI = exchng.getIn().getHeader(
+						  "CamelInterceptedEndpoint", String.class);
+				assertStringContains(interceptedURI, 
+						  "https4://info323otago.vendhq.com/api/products");
+				assertStringContains(interceptedURI, 
+						  "0af7b240-abd7-11e7-eddc-3cf42e321e48");
 
-				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", 
+						  String.class);
 				if (httpMethod.equals("GET")) {
 					exchng.getIn().setBody(createdProduct);
 				} else if (httpMethod.equals("DELETE")) {
@@ -93,16 +98,21 @@ public class CustomerUsesCouponTest extends CamelTestSupport {
 		rest.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
-				assertStringContains(interceptedURI, "http4://localhost:8081/customers/");
-				assertStringContains(interceptedURI, "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
+				String interceptedURI = exchng.getIn().getHeader(
+						  "CamelInterceptedEndpoint", String.class);
+				assertStringContains(interceptedURI, 
+						  "http4://localhost:8081/customers/");
+				assertStringContains(interceptedURI, 
+						  "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
 				assertStringContains(interceptedURI, "1495240509420");
 
-				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", 
+						  String.class);
 				if (httpMethod.equals("GET")) {
 					exchng.getIn().setBody(couponReturned);
 				} else if (httpMethod.equals("PUT")) {
-					String contentType = exchng.getIn().getHeader("Content-Type", String.class);
+					String contentType = exchng.getIn().getHeader("Content-Type", 
+							  String.class);
 					assertEquals(contentType, "application/json");
 
 					String payload = exchng.getIn().getBody(String.class);
@@ -125,7 +135,7 @@ public class CustomerUsesCouponTest extends CamelTestSupport {
 
 		createMockVend();
 		createMockREST();
-		
+
 		producer.sendBody("jms:queue:sale-event-coupons", receivedEmail);
 		assertMockEndpointsSatisfied();
 	}

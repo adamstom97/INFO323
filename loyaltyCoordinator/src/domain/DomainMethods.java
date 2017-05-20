@@ -1,6 +1,7 @@
 package domain;
 
 /**
+ * A class for the methods that the route builders call on domain objects.
  *
  * @author adath325
  */

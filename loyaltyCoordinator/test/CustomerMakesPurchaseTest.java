@@ -13,6 +13,7 @@ import static org.apache.camel.test.junit4.TestSupport.assertStringContains;
 import org.junit.Test;
 
 /**
+ * A test class for the CustomerMakesPurchase route builder.
  *
  * @author adath325
  */
@@ -62,9 +63,11 @@ public class CustomerMakesPurchaseTest extends CamelTestSupport {
 		rmi.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
+				String interceptedURI = exchng.getIn().getHeader(
+						  "CamelInterceptedEndpoint", String.class);
 				assertStringContains(interceptedURI, "rmi://localhost:1099/sales");
-				assertStringContains(interceptedURI, "remoteInterfaces=server.ISalesAgg");
+				assertStringContains(interceptedURI, 
+						  "remoteInterfaces=server.ISalesAgg");
 				assertStringContains(interceptedURI, "method=newSale");
 			}
 		});
@@ -78,14 +81,19 @@ public class CustomerMakesPurchaseTest extends CamelTestSupport {
 		rest.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
-				assertStringContains(interceptedURI, "http4://localhost:8081/customers/");
-				assertStringContains(interceptedURI, "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
+				String interceptedURI = exchng.getIn().getHeader(
+						  "CamelInterceptedEndpoint", String.class);
+				assertStringContains(interceptedURI, 
+						  "http4://localhost:8081/customers/");
+				assertStringContains(interceptedURI, 
+						  "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
 
-				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", 
+						  String.class);
 				assertEquals(httpMethod, "POST");
 
-				String contentType = exchng.getIn().getHeader("Content-Type", String.class);
+				String contentType = exchng.getIn().getHeader("Content-Type", 
+						  String.class);
 				assertEquals(contentType, "application/json");
 
 				String payload = exchng.getIn().getBody(String.class);

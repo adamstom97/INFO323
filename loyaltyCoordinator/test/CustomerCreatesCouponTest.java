@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * A test class for the CustomerCreatesCoupon route builder.
  *
  * @author adath325
  */
@@ -58,13 +59,17 @@ public class CustomerCreatesCouponTest extends CamelTestSupport {
 		vend.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
-				assertStringContains(interceptedURI, "https4://info323otago.vendhq.com/api/products");
+				String interceptedURI = exchng.getIn().getHeader(
+						  "CamelInterceptedEndpoint", String.class);
+				assertStringContains(interceptedURI, 
+						  "https4://info323otago.vendhq.com/api/products");
 
-				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", 
+						  String.class);
 				assertEquals(httpMethod, "POST");
 
-				String contentType = exchng.getIn().getHeader("Content-Type", String.class);
+				String contentType = exchng.getIn().getHeader("Content-Type", 
+						  String.class);
 				assertEquals(contentType, "application/json");
 
 				exchng.getIn().setBody(createdProduct);
