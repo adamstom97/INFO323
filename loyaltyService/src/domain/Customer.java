@@ -18,44 +18,44 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Customer implements Serializable {
 
-    private String id;
-    private Map<String, Transaction> transactions = new HashMap<>();
-    private Map<Long, Coupon> coupons = new HashMap<>();
+	private String id;
+	private Map<String, Transaction> transactions = new HashMap<>();
+	private Map<Long, Coupon> coupons = new HashMap<>();
 
-    public Customer() {
-    }
+	public Customer() {
+	}
 
-    public Customer(String id) {
-        this.id = id;
-    }
+	public Customer(String id) {
+		this.id = id;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public Map<String, Transaction> getTransactions() {
-        return transactions;
-    }
+	public Map<String, Transaction> getTransactions() {
+		return transactions;
+	}
 
-    public void setTransactions(Map<String, Transaction> transactions) {
-        this.transactions = transactions;
-    }
+	public void setTransactions(Map<String, Transaction> transactions) {
+		this.transactions = transactions;
+	}
 
-    public Map<Long, Coupon> getCoupons() {
-        return coupons;
-    }
+	public Map<Long, Coupon> getCoupons() {
+		return coupons;
+	}
 
-    public void setCoupons(Map<Long, Coupon> coupons) {
-        this.coupons = coupons;
-    }
+	public void setCoupons(Map<Long, Coupon> coupons) {
+		this.coupons = coupons;
+	}
 
-    @Override
-    public String toString() {
-        return "Customer{" + "id=" + id + ", transactions=" + transactions
-                + ", coupons=" + coupons + '}';
-    }
+	@Override
+	public String toString() {
+		return "Customer{" + "id=" + id + ", transactions=" + transactions
+				  + ", coupons=" + coupons + '}';
+	}
 }

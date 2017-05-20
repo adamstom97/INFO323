@@ -29,31 +29,31 @@ import resource.TransactionsResource;
  */
 public class LoyaltyServer {
 
-    public static void main(String[] args) throws URISyntaxException {
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
-        SLF4JBridgeHandler.install();
+	public static void main(String[] args) throws URISyntaxException {
+		SLF4JBridgeHandler.removeHandlersForRootLogger();
+		SLF4JBridgeHandler.install();
 
-        ResourceConfig config = new ResourceConfig();
+		ResourceConfig config = new ResourceConfig();
 
-        config.register(DebugFilter.class);
-        config.register(CorsFilter.class);
-        config.register(ExceptionLogger.class);
-        config.register(ExceptionMessageHandler.class);
+		config.register(DebugFilter.class);
+		config.register(CorsFilter.class);
+		config.register(ExceptionLogger.class);
+		config.register(ExceptionMessageHandler.class);
 
-        config.register(CouponResource.class);
-        config.register(CouponsResource.class);
-        config.register(PointsResource.class);
-        config.register(TransactionResource.class);
-        config.register(TransactionsResource.class);
+		config.register(CouponResource.class);
+		config.register(CouponsResource.class);
+		config.register(PointsResource.class);
+		config.register(TransactionResource.class);
+		config.register(TransactionsResource.class);
 
-        URI baseUri = new URI("http://localhost:8081/");
-        JdkHttpServerFactory.createHttpServer(baseUri, config);
+		URI baseUri = new URI("http://localhost:8081/");
+		JdkHttpServerFactory.createHttpServer(baseUri, config);
 
-        // Hard coded customer for testing.
-        Customer customer = new Customer(
-					 "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
-        CustomerDao.createCustomer(customer);
-        
-        System.out.println("Loyalty service ready on " + baseUri);
-    }
+		// Hard coded customer for testing.
+		Customer customer = new Customer(
+				  "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
+		CustomerDao.createCustomer(customer);
+
+		System.out.println("Loyalty service ready on " + baseUri);
+	}
 }

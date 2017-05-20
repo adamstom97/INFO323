@@ -20,22 +20,22 @@ import javax.ws.rs.core.UriInfo;
 @Path("/customers/{customerId}/coupons")
 public class CouponsResource {
 
-    private final CustomerDao dao;
+	private final CustomerDao dao;
 
-    public CouponsResource(@PathParam("customerId") String customerId) {
-        dao = new CustomerDao(customerId);
-    }
+	public CouponsResource(@PathParam("customerId") String customerId) {
+		dao = new CustomerDao(customerId);
+	}
 
-    @GET
-    public Collection<Coupon> getCoupons() {
-        return dao.getCoupons();
-    }
+	@GET
+	public Collection<Coupon> getCoupons() {
+		return dao.getCoupons();
+	}
 
-    @POST
-    public Response createCoupon(Coupon coupon, @Context UriInfo uri) {
-        dao.createCoupon(coupon);
-        URI newURI = uri.getAbsolutePathBuilder()
-                .path(coupon.getId().toString()).build();
-        return Response.created(newURI).entity(coupon).build();
-    }
+	@POST
+	public Response createCoupon(Coupon coupon, @Context UriInfo uri) {
+		dao.createCoupon(coupon);
+		URI newURI = uri.getAbsolutePathBuilder()
+				  .path(coupon.getId().toString()).build();
+		return Response.created(newURI).entity(coupon).build();
+	}
 }

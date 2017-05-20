@@ -22,84 +22,84 @@ import javax.ws.rs.NotFoundException;
  */
 public class CustomerDao {
 
-    private static Map<String, Customer> customers = new HashMap<>();
+	private static Map<String, Customer> customers = new HashMap<>();
 
-    // Instances of a specific customer's transaction and coupon collections.
-    private Map<String, Transaction> transactions;
-    private Map<Long, Coupon> coupons;
+	// Instances of a specific customer's transaction and coupon collections.
+	private Map<String, Transaction> transactions;
+	private Map<Long, Coupon> coupons;
 
-    public CustomerDao() {
-    }
+	public CustomerDao() {
+	}
 
-    // Constructor that initialises the specific customer collections.
-    public CustomerDao(String customerId) {
-        if (customers.containsKey(customerId)) {
-            transactions = customers.get(customerId).getTransactions();
-            coupons = customers.get(customerId).getCoupons();
-        } else {
-            throw new NotFoundException("There is no customer with that ID.");
-        }
-    }
+	// Constructor that initialises the specific customer collections.
+	public CustomerDao(String customerId) {
+		if (customers.containsKey(customerId)) {
+			transactions = customers.get(customerId).getTransactions();
+			coupons = customers.get(customerId).getCoupons();
+		} else {
+			throw new NotFoundException("There is no customer with that ID.");
+		}
+	}
 
-    /* 
+	/* 
     METHODS FOR CUSTOMERS
-     */
-    public static Map<String, Customer> getCustomers() {
-        return customers;
-    }
+	 */
+	public static Map<String, Customer> getCustomers() {
+		return customers;
+	}
 
-    public static void setCustomers(Map<String, Customer> customers) {
-        CustomerDao.customers = customers;
-    }
+	public static void setCustomers(Map<String, Customer> customers) {
+		CustomerDao.customers = customers;
+	}
 
-    public static void createCustomer(Customer customer) {
-        customers.put(customer.getId(), customer);
-    }
+	public static void createCustomer(Customer customer) {
+		customers.put(customer.getId(), customer);
+	}
 
-    /* 
+	/* 
     METHODS FOR TRANSACTIONS AND COUPONS
-     */
-    public Collection<Transaction> getTransactions() {
-        return transactions.values();
-    }
+	 */
+	public Collection<Transaction> getTransactions() {
+		return transactions.values();
+	}
 
-    public Collection<Coupon> getCoupons() {
-        return coupons.values();
-    }
+	public Collection<Coupon> getCoupons() {
+		return coupons.values();
+	}
 
-    public Transaction getTransactionById(String transactionId) {
-        return transactions.get(transactionId);
-    }
+	public Transaction getTransactionById(String transactionId) {
+		return transactions.get(transactionId);
+	}
 
-    public Coupon getCouponById(Long couponId) {
-        return coupons.get(couponId);
-    }
+	public Coupon getCouponById(Long couponId) {
+		return coupons.get(couponId);
+	}
 
-    public Boolean transactionExists(String transactionId) {
-        return transactions.containsKey(transactionId);
-    }
+	public Boolean transactionExists(String transactionId) {
+		return transactions.containsKey(transactionId);
+	}
 
-    public Boolean couponExists(Long couponId) {
-        return coupons.containsKey(couponId);
-    }
+	public Boolean couponExists(Long couponId) {
+		return coupons.containsKey(couponId);
+	}
 
-    public void createTransaction(Transaction transaction) {
-        transactions.put(transaction.getId(), transaction);
-    }
+	public void createTransaction(Transaction transaction) {
+		transactions.put(transaction.getId(), transaction);
+	}
 
-    public void createCoupon(Coupon coupon) {
-        coupons.put(coupon.getId(), coupon);
-    }
+	public void createCoupon(Coupon coupon) {
+		coupons.put(coupon.getId(), coupon);
+	}
 
-    public void deleteTransaction(Transaction transaction) {
-        transactions.remove(transaction.getId());
-    }
+	public void deleteTransaction(Transaction transaction) {
+		transactions.remove(transaction.getId());
+	}
 
-    public void deleteCoupon(Coupon coupon) {
-        coupons.remove(coupon.getId());
-    }
+	public void deleteCoupon(Coupon coupon) {
+		coupons.remove(coupon.getId());
+	}
 
-    public void updateCoupon(Long couponId, Coupon updatedCoupon) {
-        coupons.put(couponId, updatedCoupon);
-    }
+	public void updateCoupon(Long couponId, Coupon updatedCoupon) {
+		coupons.put(couponId, updatedCoupon);
+	}
 }

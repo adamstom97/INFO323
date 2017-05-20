@@ -23,40 +23,40 @@ import javax.ws.rs.core.Response;
 @Path("/customers/{customerId}/coupons/{couponId}")
 public class CouponResource {
 
-    private final CustomerDao dao;
-    private final Coupon resource;
-    private Long couponId;
+	private final CustomerDao dao;
+	private final Coupon resource;
+	private Long couponId;
 
-    public CouponResource(@PathParam("customerId") String customerId,
-            @PathParam("couponId") Long couponId) {
-        dao = new CustomerDao(customerId);
+	public CouponResource(@PathParam("customerId") String customerId,
+			  @PathParam("couponId") Long couponId) {
+		dao = new CustomerDao(customerId);
 
-        if (dao.couponExists(couponId)) {
-            this.resource = dao.getCouponById(couponId);
-            this.couponId = couponId;
-        } else {
-            throw new NotFoundException("There is no coupon with that ID.");
-        }
-    }
+		if (dao.couponExists(couponId)) {
+			this.resource = dao.getCouponById(couponId);
+			this.couponId = couponId;
+		} else {
+			throw new NotFoundException("There is no coupon with that ID.");
+		}
+	}
 
-    @GET
-    public Coupon getCoupon() {
-        return resource;
-    }
+	@GET
+	public Coupon getCoupon() {
+		return resource;
+	}
 
-    @DELETE
-    public void deleteCoupon() {
-        dao.deleteCoupon(resource);
-    }
+	@DELETE
+	public void deleteCoupon() {
+		dao.deleteCoupon(resource);
+	}
 
-    @PUT
-    public Response updateCoupon(Coupon updatedCoupon) {
-        if (couponId.equals(updatedCoupon.getId())) {
-            dao.updateCoupon(couponId, updatedCoupon);
-            return Response.noContent().build();
-        } else {
-            return Response.status(Response.Status.CONFLICT)
-                    .entity("You cannot change the ID of a coupon.").build();
-        }
-    }
+	@PUT
+	public Response updateCoupon(Coupon updatedCoupon) {
+		if (couponId.equals(updatedCoupon.getId())) {
+			dao.updateCoupon(couponId, updatedCoupon);
+			return Response.noContent().build();
+		} else {
+			return Response.status(Response.Status.CONFLICT)
+					  .entity("You cannot change the ID of a coupon.").build();
+		}
+	}
 }

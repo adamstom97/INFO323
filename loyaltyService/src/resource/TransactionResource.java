@@ -21,28 +21,28 @@ import javax.ws.rs.PathParam;
 @Path("/customers/{customerId}/transactions/{transactionId}")
 public class TransactionResource {
 
-    private final CustomerDao dao;
-    private final Transaction resource;
+	private final CustomerDao dao;
+	private final Transaction resource;
 
-    public TransactionResource(@PathParam("customerId") String customerId,
-            @PathParam("transactionId") String transactionId) {
-        dao = new CustomerDao(customerId);
+	public TransactionResource(@PathParam("customerId") String customerId,
+			  @PathParam("transactionId") String transactionId) {
+		dao = new CustomerDao(customerId);
 
-        if (dao.transactionExists(transactionId)) {
-            this.resource = dao.getTransactionById(transactionId);
-        } else {
-            throw new NotFoundException(
-                    "There is no transaction with that ID.");
-        }
-    }
+		if (dao.transactionExists(transactionId)) {
+			this.resource = dao.getTransactionById(transactionId);
+		} else {
+			throw new NotFoundException(
+					  "There is no transaction with that ID.");
+		}
+	}
 
-    @GET
-    public Transaction getTransaction() {
-        return resource;
-    }
+	@GET
+	public Transaction getTransaction() {
+		return resource;
+	}
 
-    @DELETE
-    public void deleteProduct() {
-        dao.deleteTransaction(resource);
-    }
+	@DELETE
+	public void deleteProduct() {
+		dao.deleteTransaction(resource);
+	}
 }
