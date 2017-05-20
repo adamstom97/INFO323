@@ -11,11 +11,11 @@ import java.rmi.RemoteException;
  */
 public interface ISalesAgg extends Remote {
 
-    /**
-     * Saves a new instance of Sale in a collection.
-     *
-     * @param sale the new instance of Sale
-     * @throws RemoteException
-     */
-    void newSale(Sale sale) throws RemoteException;
+	/**
+	 * Saves a new instance of Sale in a collection.
+	 *
+	 * @param sale the new instance of Sale
+	 * @throws RemoteException
+	 */
+	void newSale(Sale sale) throws RemoteException;
 }

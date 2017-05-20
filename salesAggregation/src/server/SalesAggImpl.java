@@ -13,24 +13,24 @@ import java.util.Collection;
  * @author adath325
  */
 public class SalesAggImpl extends UnicastRemoteObject implements
-        ISalesAgg {
+		  ISalesAgg {
 
-    private Collection<Sale> sales = new ArrayList<>();
+	private Collection<Sale> sales = new ArrayList<>();
 
-    public SalesAggImpl() throws RemoteException {
-    }
+	public SalesAggImpl() throws RemoteException {
+	}
 
-    @Override
-    public void newSale(Sale sale) throws RemoteException {
-        sales.add(sale);
-		  System.out.println("New sale added: " + sale.toString());
-    }
+	@Override
+	public void newSale(Sale sale) throws RemoteException {
+		sales.add(sale);
+		System.out.println("New sale added: " + sale.toString());
+	}
 
-    public Collection<Sale> getSales() {
-        return sales;
-    }
+	public Collection<Sale> getSales() {
+		return sales;
+	}
 
-    public void setSales(Collection<Sale> sales) {
-        this.sales = sales;
-    }
+	public void setSales(Collection<Sale> sales) {
+		this.sales = sales;
+	}
 }

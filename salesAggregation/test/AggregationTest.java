@@ -19,36 +19,37 @@ import java.util.Collection;
 import server.ISalesAgg;
 
 /**
+ * A test class for the salesAggregation service.
  *
  * @author adamstom97
  */
 public class AggregationTest {
 
-    private static ISalesAgg server;
+	private static ISalesAgg server;
 
-    public AggregationTest() {
-    }
+	public AggregationTest() {
+	}
 
-    @BeforeClass
-    public static void setUpClass() throws RemoteException, NotBoundException {
-        Registry registry = LocateRegistry.getRegistry("localhost");
-        server = (ISalesAgg) registry.lookup("sales");
-    }
+	@BeforeClass
+	public static void setUpClass() throws RemoteException, NotBoundException {
+		Registry registry = LocateRegistry.getRegistry("localhost");
+		server = (ISalesAgg) registry.lookup("sales");
+	}
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
+	@AfterClass
+	public static void tearDownClass() {
+	}
 
-    @Test
-    public void newSaleTest() throws RemoteException {
-        SaleItem item = new SaleItem("FW1234", 10.0, 3.5);
-        Collection<SaleItem> items = new ArrayList<>();
-        items.add(item);
+	@Test
+	public void newSaleTest() throws RemoteException {
+		SaleItem item = new SaleItem("FW1234", 10.0, 3.5);
+		Collection<SaleItem> items = new ArrayList<>();
+		items.add(item);
 
-        Customer customer = new Customer('M', "27/04/97");
-        Sale sale = new Sale("13/04/17", customer);
-        sale.setItems(items);
+		Customer customer = new Customer('M', "27/04/97");
+		Sale sale = new Sale("13/04/17", customer);
+		sale.setItems(items);
 
-        server.newSale(sale);
-    }
+		server.newSale(sale);
+	}
 }

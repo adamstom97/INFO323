@@ -16,10 +16,10 @@ import java.rmi.registry.Registry;
  */
 public class AggregationServer {
 
-    public static void main(String[] args) throws RemoteException {
-        SalesAggImpl object = new SalesAggImpl();
-        Registry registry = LocateRegistry.createRegistry(1099);
-        registry.rebind("sales", object);
-        System.out.println("Aggregation service ready.");
-    }
+	public static void main(String[] args) throws RemoteException {
+		SalesAggImpl object = new SalesAggImpl();
+		Registry registry = LocateRegistry.createRegistry(1099);
+		registry.rebind("sales", object);
+		System.out.println("Aggregation service ready.");
+	}
 }
