@@ -7,6 +7,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -49,14 +50,23 @@ public class CustomerCreatesCouponTest extends CamelTestSupport {
 		return routeBuilder;
 	}
 
-	private void createMockVendProducts() {
-		MockEndpoint products = getMockEndpoint("mock:vend");
-		products.expectedMessageCount(1); 
-		products.whenAnyExchangeReceived(new Processor() {
+	private void createMockVend() {
+		MockEndpoint vend = getMockEndpoint("mock:vend");
+
+		vend.expectedMessageCount(1);
+
+		vend.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
 				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
 				assertStringContains(interceptedURI, "https4://info323otago.vendhq.com/api/products");
+
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+				assertEquals(httpMethod, "POST");
+
+				String contentType = exchng.getIn().getHeader("Content-Type", String.class);
+				assertEquals(contentType, "application/json");
+
 				exchng.getIn().setBody(createdProduct);
 			}
 		});
@@ -65,10 +75,10 @@ public class CustomerCreatesCouponTest extends CamelTestSupport {
 	@Test
 	public void testServiceInteraction() throws Exception {
 		ProducerTemplate producer = this.context().createProducerTemplate();
+
+		createMockVend();
+
 		producer.sendBody("jms:queue:coupon-received", createdCoupon);
-
-		createMockVendProducts();
-
 		assertMockEndpointsSatisfied();
 	}
 

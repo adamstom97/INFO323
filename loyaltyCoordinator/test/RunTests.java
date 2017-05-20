@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	CustomerCreatesCouponTest.class,
 	CustomerMakesPurchaseTest.class,
+	CustomerUsesCouponTest.class,
 	CustomerViewsPointsTest.class
 })
 

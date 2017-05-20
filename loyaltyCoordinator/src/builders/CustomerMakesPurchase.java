@@ -1,7 +1,7 @@
 package builders;
 
+import domain.DomainMethods;
 import domain.Sale;
-import domain.Transaction;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import org.apache.camel.Exchange;
@@ -38,12 +38,12 @@ public class CustomerMakesPurchase extends RouteBuilder {
 							 + "&method=newSale");
 
 		from("jms:queue:new-transaction")
-				  .setHeader("points").method(CustomerMakesPurchase.class,
+				  .setHeader("points").method(DomainMethods.class,
 				  "calculatePoints(${headers.price})")
 				  .to("jms:queue:calculated-points");
 
 		from("jms:queue:calculated-points")
-				  .bean(CustomerMakesPurchase.class, "createTransaction("
+				  .bean(DomainMethods.class, "createTransaction("
 							 + "${headers.transactionId}, "
 							 + "06bf537b-c7d7-11e7-ff13-2cc53797fce3, "
 							 + "${headers.points})")
@@ -68,14 +68,5 @@ public class CustomerMakesPurchase extends RouteBuilder {
 			return password;
 		}
 		return null;
-	}
-
-	public Integer calculatePoints(Double price) {
-		return price.intValue() / 10;
-	}
-
-	public Transaction createTransaction(String id, String shop,
-			  Integer points) {
-		return new Transaction(id, shop, points);
 	}
 }

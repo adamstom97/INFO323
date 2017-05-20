@@ -9,6 +9,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import static org.apache.camel.test.junit4.TestSupport.assertStringContains;
 import org.junit.Test;
 
 /**
@@ -55,7 +56,9 @@ public class CustomerMakesPurchaseTest extends CamelTestSupport {
 
 	private void createMockRMI() {
 		MockEndpoint rmi = getMockEndpoint("mock:rmi");
-		rmi.expectedMessageCount(1); // should get 2 messages in this period
+
+		rmi.expectedMessageCount(1);
+
 		rmi.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
@@ -69,12 +72,15 @@ public class CustomerMakesPurchaseTest extends CamelTestSupport {
 
 	private void createMockREST() {
 		MockEndpoint rest = getMockEndpoint("mock:rest");
+
 		rest.expectedMessageCount(1);
+
 		rest.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
 				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
 				assertStringContains(interceptedURI, "http4://localhost:8081/customers/");
+				assertStringContains(interceptedURI, "06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
 
 				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
 				assertEquals(httpMethod, "POST");
@@ -96,11 +102,11 @@ public class CustomerMakesPurchaseTest extends CamelTestSupport {
 	@Test
 	public void testServiceInteraction() throws Exception {
 		ProducerTemplate producer = this.context().createProducerTemplate();
-		producer.sendBody("jms:queue:sale-event", receivedEmail);
 
 		createMockRMI();
 		createMockREST();
 
+		producer.sendBody("jms:queue:sale-event", receivedEmail);
 		assertMockEndpointsSatisfied();
 	}
 

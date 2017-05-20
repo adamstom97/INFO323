@@ -6,6 +6,7 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -45,15 +46,22 @@ public class CustomerViewsPointsTest extends CamelTestSupport {
 		return routeBuilder;
 	}
 
-	private void createMockVendProducts() {
-		MockEndpoint customers = getMockEndpoint("mock:vend");
-		customers.expectedMessageCount(1);
-		customers.whenAnyExchangeReceived(new Processor() {
+	private void createMockVend() {
+		
+		MockEndpoint vend = getMockEndpoint("mock:vend");
+		
+		vend.expectedMessageCount(1);
+		
+		vend.whenAnyExchangeReceived(new Processor() {
 			@Override
 			public void process(Exchange exchng) throws Exception {
 				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
 				assertStringContains(interceptedURI, "https4://info323otago.vendhq.com/api/customers");
 				assertStringContains(interceptedURI, "?email=boris@email.com");
+				
+				String httpMethod = exchng.getIn().getHeader("CamelHttpMethod", String.class);
+				assertEquals(httpMethod, "GET");
+				
 				exchng.getIn().setBody(retrievedCustomer);
 			}
 		});
@@ -61,14 +69,8 @@ public class CustomerViewsPointsTest extends CamelTestSupport {
 	
 	private void createMockWebsocket() {
 		MockEndpoint ws = getMockEndpoint("mock:ws");
+		
 		ws.expectedMessageCount(1);
-		ws.whenAnyExchangeReceived(new Processor() {
-			@Override
-			public void process(Exchange exchng) throws Exception {
-				String interceptedURI = exchng.getIn().getHeader("CamelInterceptedEndpoint", String.class);
-				assertStringContains(interceptedURI, "id\":\"06bf537b-c7d7-11e7-ff13-2d957f9ff0f0");
-			}
-		});
 	}
 
 	@Test
@@ -76,10 +78,9 @@ public class CustomerViewsPointsTest extends CamelTestSupport {
 		ProducerTemplate producer = this.context().createProducerTemplate();
 		producer.sendBody("direct:queue:email-received", requestedEmail);
 
-		createMockVendProducts();
+		createMockVend();
 		createMockWebsocket();
 
 		assertMockEndpointsSatisfied();
 	}
-
 }
