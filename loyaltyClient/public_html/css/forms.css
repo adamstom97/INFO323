@@ -72,7 +72,7 @@ fieldset {
 .formlabels, .formfields {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;  /* common justification to ensure things line up */
+	justify-content: space-around;  /* common justification */
 	flex-basis: auto;  /* grow and shrink as necessary */
 }
 

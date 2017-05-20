@@ -17,12 +17,15 @@ module.controller('LoyaltyController', function ($scope, $resource) {
 		ws1.onmessage = function (event) {
 			try {
 				var object = JSON.parse(event.data);
-				if (object.customers[0].id === '06bf537b-c77f-11e7-ff13-0c871e86361a') {
+				if (object.customers[0].id === 
+						  '06bf537b-c77f-11e7-ff13-0c871e86361a') {
 					$scope.messages = "That is not a valid email address.";
 				} else {
 					$scope.customer = object.customers[0];
-					var pointsResource = $resource(serverURI + 'points/unused', null, {
-						'getPoints': {transformResponse: function (data, headers, status) {
+					var pointsResource = $resource(serverURI + 'points/unused', 
+					null, {
+						'getPoints': {transformResponse: function (data, headers, 
+							status) {
 								return {value: data};
 							}
 						}});
@@ -73,12 +76,17 @@ module.controller('LoyaltyController', function ($scope, $resource) {
 	};
 	$scope.createCoupon = function () {
 		$scope.messages = null;
-		if (typeof $scope.coupon === 'undefined' || parseInt($scope.coupon.points) > parseInt($scope.available) || parseInt($scope.coupon.points) <= 0) {
+		if (typeof $scope.coupon === 'undefined' || 
+				  parseInt($scope.coupon.points) > parseInt($scope.available) || 
+				  parseInt($scope.coupon.points) <= 0) {
 			$scope.messages = "That is not a valid number of points.";
 		} else {
 			$scope.messages = null;
-			var coupons = $resource(serverURI + 'coupons', null, {create: {method: "POST", headers: {'Content-Type': 'application/json'}}});
-			coupons.create({customer: $scope.customer.id}, $scope.coupon, function (data) {
+			var coupons = $resource(serverURI + 'coupons', null, {create: 
+						  {method: "POST", headers: 
+							  {'Content-Type': 'application/json'}}});
+			coupons.create({customer: $scope.customer.id}, $scope.coupon, 
+			function (data) {
 				var newCoupon = data;
 				var product = new Object();
 				product.handle = newCoupon.id;
